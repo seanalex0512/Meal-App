@@ -71,6 +71,16 @@
   transform: translateY(-2px);
 }
 
+.meal-plans-btn.templates-btn {
+  background: linear-gradient(135deg, var(--light-pink) 0%, var(--blush) 100%);
+  color: var(--dark-text);
+  box-shadow: 0 4px 15px rgba(232, 180, 160, 0.3);
+}
+
+.meal-plans-btn.templates-btn:hover {
+  box-shadow: 0 8px 20px rgba(232, 180, 160, 0.5);
+}
+
 @media (max-width: 600px) {
   .greeting {
     font-size: 1.3rem;

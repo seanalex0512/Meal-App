@@ -54,7 +54,16 @@ function Home() {
         </button>
       </div>
 
-      <div style={{ marginTop: '2rem', marginBottom: '2rem' }}>
+      <div style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+        <button
+          className="meal-plans-btn templates-btn"
+          onClick={() => navigate('/templates')}
+        >
+          💾 Save & Manage Templates
+        </button>
+      </div>
+
+      <div style={{ marginTop: '1.5rem', marginBottom: '2rem' }}>
         <button
           className="meal-plans-btn"
           onClick={() => navigate('/settings')}
