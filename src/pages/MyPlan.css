@@ -1,0 +1,236 @@
+.my-plan-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.back-btn {
+  margin-bottom: 1.5rem;
+  background: none;
+  border: 1px solid var(--light-pink);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: var(--dark-text);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: var(--light-pink);
+}
+
+.plan-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--dark-text);
+  margin-bottom: 1.5rem;
+}
+
+.plan-summary {
+  background: linear-gradient(135deg, var(--light-pink) 0%, var(--blush) 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: 0 4px 12px var(--shadow-soft);
+}
+
+.plan-summary-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--dark-text);
+  margin-bottom: var(--spacing-md);
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: var(--dark-text);
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+.summary-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-pink);
+  display: block;
+}
+
+.total-cost {
+  background: var(--white);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  text-align: center;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.cost-label {
+  font-size: 0.9rem;
+  color: var(--dark-text);
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+.cost-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--peach);
+}
+
+.plan-meals {
+  margin-bottom: var(--spacing-lg);
+}
+
+.plan-meal-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  box-shadow: 0 2px 8px var(--shadow-soft);
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.plan-meal-emoji {
+  font-size: 3rem;
+  min-width: 50px;
+  text-align: center;
+}
+
+.plan-meal-info {
+  flex: 1;
+}
+
+.plan-meal-type {
+  font-size: 0.85rem;
+  color: var(--light-text);
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+.plan-meal-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark-text);
+  margin-bottom: var(--spacing-xs);
+}
+
+.plan-meal-price {
+  font-size: 0.9rem;
+  color: var(--primary-pink);
+  font-weight: 600;
+}
+
+.meal-controls {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.meal-btn-small {
+  background: none;
+  border: 1px solid var(--blush);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs);
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--dark-text);
+  transition: all 0.2s ease;
+}
+
+.meal-btn-small:hover {
+  background: var(--blush);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl) var(--spacing-md);
+  color: var(--light-text);
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.empty-state-text {
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.empty-state-subtext {
+  font-size: 0.9rem;
+  color: var(--light-text);
+}
+
+.browse-btn {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, var(--light-pink) 0%, var(--blush) 100%);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: none;
+  color: var(--dark-text);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--shadow-soft);
+  transition: all 0.3s ease;
+}
+
+.browse-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-soft);
+}
+
+.add-more-btn {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, var(--peach) 0%, var(--primary-pink) 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(232, 180, 160, 0.5);
+  transition: all 0.3s ease;
+}
+
+.add-more-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(232, 180, 160, 0.7);
+}
+
+.add-more-btn:active {
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .plan-title {
+    font-size: 1.5rem;
+  }
+}

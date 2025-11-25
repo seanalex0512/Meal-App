@@ -1,0 +1,84 @@
+.home-page {
+  animation: fadeIn 0.3s ease;
+}
+
+.greeting {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--dark-text);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.category-btn {
+  background: linear-gradient(135deg, var(--light-pink) 0%, var(--blush) 100%);
+  padding: var(--spacing-lg) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px var(--shadow-soft);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark-text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.category-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px var(--shadow-medium);
+}
+
+.category-btn:active {
+  transform: translateY(-2px);
+}
+
+.category-icon {
+  font-size: 2rem;
+}
+
+.meal-plans-section {
+  margin-top: var(--spacing-lg);
+}
+
+.meal-plans-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--peach) 0%, var(--primary-pink) 100%);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 15px rgba(232, 180, 160, 0.5);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  transition: all 0.3s ease;
+}
+
+.meal-plans-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(232, 180, 160, 0.7);
+}
+
+.meal-plans-btn:active {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .greeting {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 601px) {
+  .greeting {
+    font-size: 1.8rem;
+  }
+}

@@ -1,13 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Sophisticated Warm Palette */
+  --primary-pink: #E8A8C5;
+  --light-pink: #F0D4E4;
+  --accent-red: #C74A5F;
+  --peach: #E8B4A0;
+  --cream: #FAF7F2;
+  --white: #FFFFFF;
+
+  /* Neutral & Text */
+  --dark-text: #2C2C2C;
+  --light-text: #7A7A7A;
+  --shadow-soft: rgba(0, 0, 0, 0.06);
+  --shadow-medium: rgba(0, 0, 0, 0.1);
+
+  /* Nutrition Colors */
+  --protein-blue: #D4E6F1;
+  --carbs-green: #D5F4E6;
+  --fat-yellow: #FCF3CF;
+
+  /* Accent Colors */
+  --success: #A8D8BA;
+  --warning: #FFD89B;
+  --error: #E8A8B8;
+
+  /* Typography */
+  --font-main: 'Poppins', sans-serif;
+  --font-accent: 'Quicksand', sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 2.5rem;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-main);
+  background-color: var(--cream);
+  color: var(--dark-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Base Styling */
+button {
+  font-family: var(--font-main);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-pink);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--light-pink);
 }
