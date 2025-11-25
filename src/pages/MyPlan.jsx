@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTemplates } from '../context/TemplatesContext';
 import './MyPlan.css';
 
 function MyPlan({ plan, setPlan }) {
   const navigate = useNavigate();
+  const { templates, saveTemplate, deleteTemplate } = useTemplates();
+  const [showSaveTemplate, setShowSaveTemplate] = useState(false);
+  const [showLoadTemplate, setShowLoadTemplate] = useState(false);
+  const [templateName, setTemplateName] = useState('');
 
 
   const hasAnyMeals = plan.breakfast || plan.lunch || plan.dinner || plan.snacks.length > 0;
@@ -72,6 +78,38 @@ function MyPlan({ plan, setPlan }) {
     lunch: 'Lunch',
     dinner: 'Dinner',
     snacks: 'Snacks'
+  };
+
+  const handleSaveTemplate = async () => {
+    if (!templateName.trim()) {
+      alert('Please enter a template name');
+      return;
+    }
+
+    const success = await saveTemplate(templateName, plan);
+    if (success) {
+      setTemplateName('');
+      setShowSaveTemplate(false);
+      alert('Template saved successfully!');
+    } else {
+      alert('Error saving template');
+    }
+  };
+
+  const handleLoadTemplate = (template) => {
+    setPlan(template.plan);
+    setShowLoadTemplate(false);
+  };
+
+  const handleDeleteTemplate = async (templateId) => {
+    if (window.confirm('Are you sure you want to delete this template?')) {
+      const success = await deleteTemplate(templateId);
+      if (success) {
+        alert('Template deleted');
+      } else {
+        alert('Error deleting template');
+      }
+    }
   };
 
   return (
@@ -256,7 +294,97 @@ function MyPlan({ plan, setPlan }) {
           >
             + Add More Meals
           </button>
+
+          <div className="template-actions">
+            <button
+              onClick={() => setShowSaveTemplate(true)}
+              className="template-btn save-btn"
+            >
+              💾 Save as Template
+            </button>
+            {templates.length > 0 && (
+              <button
+                onClick={() => setShowLoadTemplate(true)}
+                className="template-btn load-btn"
+              >
+                📂 Load Template ({templates.length})
+              </button>
+            )}
+          </div>
         </>
+      )}
+
+      {/* Save Template Modal */}
+      {showSaveTemplate && (
+        <div className="modal-overlay" onClick={() => setShowSaveTemplate(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Save Meal Plan as Template</h2>
+            <input
+              type="text"
+              placeholder="Enter template name (e.g., Gym Week, Bulk Phase)"
+              value={templateName}
+              onChange={(e) => setTemplateName(e.target.value)}
+              className="template-input"
+            />
+            <div className="modal-actions">
+              <button onClick={handleSaveTemplate} className="modal-btn primary">
+                Save
+              </button>
+              <button onClick={() => setShowSaveTemplate(false)} className="modal-btn secondary">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Load Template Modal */}
+      {showLoadTemplate && (
+        <div className="modal-overlay" onClick={() => setShowLoadTemplate(false)}>
+          <div className="modal-content modal-large" onClick={(e) => e.stopPropagation()}>
+            <h2>Load a Template</h2>
+            {templates.length === 0 ? (
+              <p className="empty-templates">No templates saved yet</p>
+            ) : (
+              <div className="templates-list">
+                {templates.map((template) => (
+                  <div key={template.id} className="template-item">
+                    <div className="template-info">
+                      <h3>{template.name}</h3>
+                      <div className="template-stats">
+                        {template.plan.breakfast && <span>🥐 Breakfast</span>}
+                        {template.plan.lunch && <span>🥗 Lunch</span>}
+                        {template.plan.dinner && <span>🍝 Dinner</span>}
+                        {template.plan.snacks.length > 0 && (
+                          <span>🍪 {template.plan.snacks.length} Snacks</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="template-actions-small">
+                      <button
+                        onClick={() => handleLoadTemplate(template)}
+                        className="template-item-btn load"
+                        title="Load"
+                      >
+                        ✓
+                      </button>
+                      <button
+                        onClick={() => handleDeleteTemplate(template.id)}
+                        className="template-item-btn delete"
+                        title="Delete"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <button onClick={() => setShowLoadTemplate(false)} className="modal-btn secondary">
+              Close
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
