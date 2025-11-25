@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import MealCategory from './pages/MealCategory';
 import MealDetails from './pages/MealDetails';
 import MyPlan from './pages/MyPlan';
+import Templates from './pages/Templates';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -81,6 +82,14 @@ function App() {
                   element={
                     <ProtectedRoute>
                       <MyPlan plan={plan} setPlan={setPlan} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/templates"
+                  element={
+                    <ProtectedRoute>
+                      <Templates />
                     </ProtectedRoute>
                   }
                 />
