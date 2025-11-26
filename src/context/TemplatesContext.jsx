@@ -38,19 +38,41 @@ export function TemplatesProvider({ children }) {
   }, [currentUser]);
 
   const saveTemplate = async (templateName, plan) => {
-    if (!currentUser) return false;
+    if (!currentUser) {
+      console.error('No user logged in');
+      return false;
+    }
+
+    if (!templateName || !templateName.trim()) {
+      console.error('Template name is required');
+      return false;
+    }
+
+    if (!plan || (typeof plan === 'object' && Object.keys(plan).length === 0)) {
+      console.error('Template plan is empty');
+      return false;
+    }
 
     try {
       const templatesRef = collection(db, 'users', currentUser.uid, 'templates');
       const newTemplate = {
-        name: templateName,
+        name: templateName.trim(),
         plan: plan,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      const docRef = await addDoc(templatesRef, newTemplate);
+
+      // Immediately add to local state to reflect changes
+      const addedTemplate = {
+        id: docRef.id,
+        ...newTemplate,
         createdAt: new Date(),
         updatedAt: new Date()
       };
 
-      const docRef = await addDoc(templatesRef, newTemplate);
-      setTemplates(prev => [...prev, { id: docRef.id, ...newTemplate }]);
+      setTemplates(prev => [...prev, addedTemplate]);
       return true;
     } catch (error) {
       console.error('Error saving template:', error);

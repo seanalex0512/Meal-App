@@ -1,15 +1,15 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useStreak } from '../context/StreakContext';
+import { useStatistics } from '../context/StatisticsContext';
 import './Dashboard.css';
 
 function Dashboard({ plan }) {
   const navigate = useNavigate();
   const { logout, displayName } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login');
-  };
+  const { currentStreak, bestStreak, updateStreak } = useStreak();
+  const { saveDailyStats } = useStatistics();
 
   // Calculate daily stats from plan
   const calculateStats = () => {
@@ -46,15 +46,49 @@ function Dashboard({ plan }) {
     return { totalCalories, totalProtein, totalCarbs, totalFats };
   };
 
+  const calculateTotalCost = () => {
+    let totalCost = 0;
+
+    if (plan.breakfast) totalCost += plan.breakfast.price || 0;
+    if (plan.lunch) totalCost += plan.lunch.price || 0;
+    if (plan.dinner) totalCost += plan.dinner.price || 0;
+    plan.snacks.forEach(snack => {
+      totalCost += snack.price || 0;
+    });
+
+    return totalCost;
+  };
+
+  // Update streak and save daily stats when component mounts or plan changes
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (plan && (plan.breakfast || plan.lunch || plan.dinner || (plan.snacks && plan.snacks.length > 0))) {
+      updateStreak();
+
+      // Calculate stats and save them
+      const stats = calculateStats();
+      saveDailyStats(new Date(), {
+        calories: stats.totalCalories,
+        protein: stats.totalProtein,
+        carbs: stats.totalCarbs,
+        fats: stats.totalFats,
+        cost: calculateTotalCost(),
+        meals: plan
+      });
+    }
+  }, [plan, updateStreak, saveDailyStats]);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
   const dailyCalorieGoal = 2000;
   const stats = calculateStats();
   const caloriePercentage = Math.min((stats.totalCalories / dailyCalorieGoal) * 100, 100);
   const remainingCalories = Math.max(dailyCalorieGoal - stats.totalCalories, 0);
   const hasCompletedGoal = stats.totalCalories >= dailyCalorieGoal;
 
-  // Mock streak data - in a real app, this would be persisted
-  const currentStreak = 5;
-  const bestStreak = 12;
 
   // Get current day of week
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -235,10 +269,16 @@ function Dashboard({ plan }) {
           🍽️ Pick Meals
         </button>
         <button
-          className="action-btn secondary"
+          className="action-btn primary"
           onClick={() => navigate('/my-plan')}
         >
           📋 View Plan
+        </button>
+        <button
+          className="action-btn primary"
+          onClick={() => navigate('/stats')}
+        >
+          📊 Statistics
         </button>
       </div>
     </div>

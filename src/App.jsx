@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { AuthProvider } from './context/AuthContext';
 import { TemplatesProvider } from './context/TemplatesContext';
+import { StreakProvider } from './context/StreakContext';
+import { StatisticsProvider } from './context/StatisticsContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
@@ -10,6 +12,7 @@ import MealCategory from './pages/MealCategory';
 import MealDetails from './pages/MealDetails';
 import MyPlan from './pages/MyPlan';
 import Templates from './pages/Templates';
+import StatsHistory from './pages/StatsHistory';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -23,6 +26,23 @@ function App() {
     snacks: []
   });
 
+  // Load plan from localStorage on mount
+  useEffect(() => {
+    const savedPlan = localStorage.getItem('currentPlan');
+    if (savedPlan) {
+      try {
+        setPlan(JSON.parse(savedPlan));
+      } catch (error) {
+        console.error('Error parsing saved plan:', error);
+      }
+    }
+  }, []);
+
+  // Sync plan to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('currentPlan', JSON.stringify(plan));
+  }, [plan]);
+
   const [preferences, setPreferences] = useState({
     vegetarian: false,
     vegan: false,
@@ -35,10 +55,12 @@ function App() {
   return (
     <Router>
       <AuthProvider>
-        <TemplatesProvider>
-          <div className="app-container">
-            <div className="main-content">
-              <Routes>
+        <StreakProvider>
+          <TemplatesProvider>
+            <StatisticsProvider>
+              <div className="app-container">
+              <div className="main-content">
+                <Routes>
                 {/* Auth Routes */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -89,7 +111,15 @@ function App() {
                   path="/templates"
                   element={
                     <ProtectedRoute>
-                      <Templates />
+                      <Templates plan={plan} setPlan={setPlan} />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/stats"
+                  element={
+                    <ProtectedRoute>
+                      <StatsHistory />
                     </ProtectedRoute>
                   }
                 />
@@ -102,9 +132,11 @@ function App() {
                   }
                 />
               </Routes>
+              </div>
             </div>
-          </div>
-        </TemplatesProvider>
+            </StatisticsProvider>
+          </TemplatesProvider>
+        </StreakProvider>
       </AuthProvider>
     </Router>
   );

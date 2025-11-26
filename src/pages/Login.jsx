@@ -80,7 +80,7 @@ function Login() {
       <div className="auth-card">
         <div className="auth-header">
           <div className="auth-icon">🍽️</div>
-          <h1 className="auth-title">Autistic Gorilla</h1>
+          <h1 className="auth-title">Acoustic Gorilla</h1>
           <p className="auth-subtitle">Your Personal Meal Planner</p>
         </div>
 

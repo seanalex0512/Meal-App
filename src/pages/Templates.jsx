@@ -1,22 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTemplates } from '../context/TemplatesContext';
 import './Templates.css';
 
-function Templates() {
+function Templates({ plan, setPlan }) {
   const navigate = useNavigate();
   const { templates, loading, saveTemplate, deleteTemplate } = useTemplates();
   const [templateName, setTemplateName] = useState('');
-  const [currentPlan, setCurrentPlan] = useState(null);
   const [showSaveForm, setShowSaveForm] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-
-  useEffect(() => {
-    const savedPlan = localStorage.getItem('currentPlan');
-    if (savedPlan) {
-      setCurrentPlan(JSON.parse(savedPlan));
-    }
-  }, []);
 
   const handleSaveTemplate = async () => {
     if (!templateName.trim()) {
@@ -24,13 +16,13 @@ function Templates() {
       return;
     }
 
-    if (!currentPlan || (!currentPlan.breakfast && !currentPlan.lunch && !currentPlan.dinner && currentPlan.snacks.length === 0)) {
+    if (!plan || (!plan.breakfast && !plan.lunch && !plan.dinner && (!plan.snacks || plan.snacks.length === 0))) {
       alert('Please create a meal plan before saving as template');
       return;
     }
 
     setIsSaving(true);
-    const success = await saveTemplate(templateName, currentPlan);
+    const success = await saveTemplate(templateName, plan);
     setIsSaving(false);
 
     if (success) {
@@ -43,7 +35,18 @@ function Templates() {
   };
 
   const handleLoadTemplate = (template) => {
-    localStorage.setItem('currentPlan', JSON.stringify(template.plan));
+    // Merge template meals with current plan
+    const mergedPlan = {
+      breakfast: template.plan.breakfast || plan.breakfast,
+      lunch: template.plan.lunch || plan.lunch,
+      dinner: template.plan.dinner || plan.dinner,
+      snacks: [...(plan.snacks || []), ...(template.plan.snacks || [])]
+    };
+
+    // Update the plan state directly
+    setPlan(mergedPlan);
+
+    // Navigate to my-plan page
     navigate('/my-plan');
   };
 
